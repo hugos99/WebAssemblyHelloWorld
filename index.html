@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<h1>SAMPLE</h1>
+	<h1 id="TESTE"></h1>
+	<h1>2+2:</h1>
+	<h1 id="TESTE2"></h1>
+	<script >
+
+// Fetch and instantiate the module
+fetch("build/optimized.wasm")
+.then(response => response.arrayBuffer())
+.then(buffer => WebAssembly.instantiate(buffer, {
+  env: {
+    abort: function() {}
+  }
+}))
+.then(module => {
+	console.log("Estou a correr o codigo");
+	console.log(module.instance.exports.Teste());
+	console.log(module.instance.exports.add(2,2));
+	document.getElementById("TESTE").textContent=module.instance.exports.Teste();
+	document.getElementById("TESTE2").textContent=module.instance.exports.add(2,2);
+
+});
+</script>
+</body>
+</html>
